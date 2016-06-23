@@ -12,7 +12,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="FirstNameTextBox">Todo Notes</label>
-                    <asp:TextBox runat="server" CssClass="form-control" ID="TodoNotesTextBox" placeholder="Todo Notes" required="true"></asp:TextBox>
+                    <asp:TextBox runat="server" CssClass="form-control" ID="TodoNotesTextBox" placeholder="Todo Notes" required="false"></asp:TextBox>
                 </div>
                 <div class="checkbox-inline">
                     <asp:CheckBox runat="server" ID="CompleteStateCheckBox" Text="Completed" />

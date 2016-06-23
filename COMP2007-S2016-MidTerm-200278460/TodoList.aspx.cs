@@ -44,7 +44,7 @@ namespace COMP2007_S2016_MidTerm_200278460
 
                 // query the Todos Table using EF and LINQ
                 var Todos = (from allTodos in db.Todos
-                                select allTodos);
+                             select allTodos);
 
                 // bind the result to the GridView
                 TodosGridView.DataSource = Todos.AsQueryable().OrderBy(SortString).ToList();
@@ -75,8 +75,8 @@ namespace COMP2007_S2016_MidTerm_200278460
             {
                 // create object of the Student class and store the query string inside of it
                 Todo deletedTodo = (from todoRecords in db.Todos
-                                          where todoRecords.TodoID == TodoID
-                                          select todoRecords).FirstOrDefault();
+                                    where todoRecords.TodoID == TodoID
+                                    select todoRecords).FirstOrDefault();
 
                 // remove the selected student from the db
                 db.Todos.Remove(deletedTodo);
@@ -155,6 +155,41 @@ namespace COMP2007_S2016_MidTerm_200278460
 
             // refresh the grid
             this.GetTodos();
+        }
+
+        protected void CompleteStatusCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // if the checkbox checked state changes, updated the database with "Completed" value
+
+            for (int i = 0; i < TodosGridView.Rows.Count; i++)
+            {
+                CheckBox chkUpdate = (CheckBox)sender;
+                if (chkUpdate != null)
+                {
+                    // Get the values of textboxes using findControl
+                    int todoID = Convert.ToInt32(TodosGridView.Rows[i].Cells[1].Text);
+
+                    // Use EF to connect to the server
+                    using (TodoConnection db = new TodoConnection())
+                    {
+                        Todo newTodo = new Todo();
+
+                        newTodo = (from todo in db.Todos
+                                   where todo.TodoID == todoID
+                                   select todo).FirstOrDefault();
+
+                        newTodo.Completed = chkUpdate.Checked;
+
+                        // save our changes - also updates and inserts
+                        db.SaveChanges();
+
+                        // Redirect back to the updated todo list page
+                        Response.Redirect("~/TodoList.aspx");
+                    }
+
+                }
+            }
+
         }
     }
 }

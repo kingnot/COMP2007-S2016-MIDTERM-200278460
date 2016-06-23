@@ -29,7 +29,11 @@
                         <asp:BoundField DataField="TodoID" HeaderText="ID" Visible="false" SortExpression="TodoID" />
                         <asp:BoundField DataField="TodoName" HeaderText="Todo" Visible="true" SortExpression="TodoName" />
                         <asp:BoundField DataField="TodoNotes" HeaderText="Notes" Visible="true" SortExpression="TodoNotes" />
-
+                        <asp:TemplateField HeaderText="Completed" Visible="true" SortExpression="Completed">
+                            <ItemTemplate>
+                                <asp:CheckBox runat="server" ID="CompleteStatusCheckBox" AutoPostBack="true" Checked='<%# Eval("Completed") %>' OnCheckedChanged="CompleteStatusCheckBox_CheckedChanged"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:HyperLinkField HeaderText="Edit" Text="<i class='fa fa-pencil-square-o fa-lg'></i> Edit" 
                             NavigateUrl="~/TodoDetails.aspx.cs" ControlStyle-CssClass="btn btn-primary btn-sm" runat="server"
                             DataNavigateUrlFields="TodoID" DataNavigateUrlFormatString="TodoDetails.aspx?TodoID={0}" />
